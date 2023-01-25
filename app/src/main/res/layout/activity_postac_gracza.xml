@@ -4,184 +4,305 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Postac.postac_gracza">
+    tools:context=".postac_gracza">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:background="@drawable/backimage"
+        android:orientation="vertical"
+        tools:ignore="MissingConstraints">
 
         <TextView
-            android:id="@+id/textView33"
+            android:id="@+id/textView2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Twoje Statystyki" />
+            android:fontFamily="@font/alatsi"
+            android:text="Reginald Winters"
+            android:textAlignment="center"
+            android:textColor="#FFFFFF"
+            android:textSize="24sp"
+            android:textStyle="bold" />
+
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="match_parent"
+            android:layout_height="112dp"
+            app:srcCompat="@drawable/character" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="horizontal">
+            android:orientation="vertical">
 
             <TextView
-                android:id="@+id/textView17"
-                android:layout_width="wrap_content"
+                android:id="@+id/textView13"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Siła" />
+                android:fontFamily="@font/alatsi"
+                android:justificationMode="inter_word"
+                android:paddingLeft="45px"
+                android:paddingTop="5px"
+                android:paddingRight="45px"
+                android:paddingBottom="5px"
+                android:text="Siła"
+                android:textAlignment="center"
+                android:textColor="#FFFFFF"
+                android:textSize="18sp"
+                android:textStyle="bold" />
 
             <TextView
-                android:id="@+id/textView18"
-                android:layout_width="wrap_content"
+                android:id="@+id/strengthCSValue"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="TextView" />
+                android:fontFamily="@font/alatsi"
+                android:justificationMode="inter_word"
+                android:paddingLeft="45px"
+                android:paddingTop="5px"
+                android:paddingRight="45px"
+                android:paddingBottom="5px"
+                android:text="0"
+                android:textAlignment="center"
+                android:textColor="#FFFFFF"
+                android:textSize="16sp" />
+
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="horizontal">
+            android:orientation="vertical">
 
             <TextView
-                android:id="@+id/textView19"
-                android:layout_width="wrap_content"
+                android:id="@+id/textView1555"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Zręczność" />
+                android:fontFamily="@font/alatsi"
+                android:justificationMode="inter_word"
+                android:paddingLeft="45px"
+                android:paddingTop="5px"
+                android:paddingRight="45px"
+                android:paddingBottom="5px"
+                android:text="Zręczność"
+                android:textAlignment="center"
+                android:textColor="#FFFFFF"
+                android:textSize="18sp"
+                android:textStyle="bold" />
 
             <TextView
-                android:id="@+id/textView20"
-                android:layout_width="wrap_content"
+                android:id="@+id/dexterityCSValue"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="TextView" />
+                android:fontFamily="@font/alatsi"
+                android:justificationMode="inter_word"
+                android:paddingLeft="45px"
+                android:paddingTop="5px"
+                android:paddingRight="45px"
+                android:paddingBottom="5px"
+                android:text="0"
+                android:textAlignment="center"
+                android:textColor="#FFFFFF"
+                android:textSize="16sp" />
+
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="horizontal">
+            android:orientation="vertical">
 
             <TextView
-                android:id="@+id/textView21"
-                android:layout_width="wrap_content"
+                android:id="@+id/textView1444"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Wiedza" />
+                android:fontFamily="@font/alatsi"
+                android:justificationMode="inter_word"
+                android:paddingLeft="45px"
+                android:paddingTop="5px"
+                android:paddingRight="45px"
+                android:paddingBottom="5px"
+                android:text="Wiedza"
+                android:textAlignment="center"
+                android:textColor="#FFFFFF"
+                android:textSize="18sp"
+                android:textStyle="bold" />
 
             <TextView
-                android:id="@+id/textView22"
-                android:layout_width="wrap_content"
+                android:id="@+id/intCSValue"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="TextView" />
+                android:fontFamily="@font/alatsi"
+                android:justificationMode="inter_word"
+                android:paddingLeft="45px"
+                android:paddingTop="5px"
+                android:paddingRight="45px"
+                android:paddingBottom="5px"
+                android:text="0"
+                android:textAlignment="center"
+                android:textColor="#FFFFFF"
+                android:textSize="16sp" />
+
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="horizontal">
+            android:orientation="vertical">
 
             <TextView
-                android:id="@+id/textView23"
-                android:layout_width="wrap_content"
+                android:id="@+id/textView1333"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="strzelanie" />
+                android:fontFamily="@font/alatsi"
+                android:justificationMode="inter_word"
+                android:paddingLeft="45px"
+                android:paddingTop="5px"
+                android:paddingRight="45px"
+                android:paddingBottom="5px"
+                android:text="Mity"
+                android:textAlignment="center"
+                android:textColor="#FFFFFF"
+                android:textSize="18sp"
+                android:textStyle="bold" />
 
             <TextView
-                android:id="@+id/textView30"
-                android:layout_width="wrap_content"
+                android:id="@+id/cthulhuCSValue"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="TextView" />
+                android:fontFamily="@font/alatsi"
+                android:justificationMode="inter_word"
+                android:paddingLeft="45px"
+                android:paddingTop="5px"
+                android:paddingRight="45px"
+                android:paddingBottom="5px"
+                android:text="0"
+                android:textAlignment="center"
+                android:textColor="#FFFFFF"
+                android:textSize="16sp" />
+
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="horizontal">
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/textView124"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/alatsi"
+                        android:justificationMode="inter_word"
+                        android:paddingLeft="45px"
+                        android:paddingTop="5px"
+                        android:paddingRight="45px"
+                        android:paddingBottom="5px"
+                        android:text="Szczęście"
+                        android:textAlignment="center"
+                        android:textColor="#FFFFFF"
+                        android:textSize="18sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/luckCSValue"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/alatsi"
+                        android:justificationMode="inter_word"
+                        android:paddingLeft="45px"
+                        android:paddingTop="5px"
+                        android:paddingRight="45px"
+                        android:paddingBottom="5px"
+                        android:text="0"
+                        android:textAlignment="center"
+                        android:textColor="#FFFFFF"
+                        android:textSize="16sp" />
+
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/textView1277"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/alatsi"
+                    android:justificationMode="inter_word"
+                    android:paddingLeft="45px"
+                    android:paddingTop="5px"
+                    android:paddingRight="45px"
+                    android:paddingBottom="5px"
+                    android:text="HP"
+                    android:textAlignment="center"
+                    android:textColor="#FFFFFF"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/HPCSValue"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/alatsi"
+                    android:justificationMode="inter_word"
+                    android:paddingLeft="45px"
+                    android:paddingTop="5px"
+                    android:paddingRight="45px"
+                    android:paddingBottom="5px"
+                    android:text="0"
+                    android:textAlignment="center"
+                    android:textColor="#FFFFFF"
+                    android:textSize="16sp" />
+
+            </LinearLayout>
 
             <TextView
-                android:id="@+id/textView24"
-                android:layout_width="wrap_content"
+                android:id="@+id/textView122"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Mity" />
+                android:fontFamily="@font/alatsi"
+                android:justificationMode="inter_word"
+                android:paddingLeft="45px"
+                android:paddingTop="5px"
+                android:paddingRight="45px"
+                android:paddingBottom="5px"
+                android:text="Przedmioty"
+                android:textAlignment="center"
+                android:textColor="#FFFFFF"
+                android:textSize="18sp"
+                android:textStyle="bold" />
 
             <TextView
-                android:id="@+id/textView29"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="TextView" />
-        </LinearLayout>
+                android:id="@+id/itemsList"
+                android:layout_width="match_parent"
+                android:layout_height="97dp"
+                android:fontFamily="@font/alatsi"
+                android:justificationMode="inter_word"
+                android:paddingLeft="45px"
+                android:paddingTop="5px"
+                android:paddingRight="45px"
+                android:paddingBottom="5px"
+                android:textAlignment="center"
+                android:textColor="#FFFFFF"
+                android:textSize="16sp" />
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="horizontal">
-
-            <TextView
-                android:id="@+id/textView26"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Szczęście" />
-
-            <TextView
-                android:id="@+id/textView28"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="TextView" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="horizontal">
-
-            <TextView
-                android:id="@+id/textView25"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Życie" />
-
-            <TextView
-                android:id="@+id/textView27"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="TextView" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="horizontal">
-
-            <TextView
-                android:id="@+id/textView31"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Poczytalność" />
-
-            <TextView
-                android:id="@+id/textView32"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="TextView" />
         </LinearLayout>
 
         <Button
-            android:id="@+id/cofnij_button"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Cofnij" />
+            android:id="@+id/BackButtonCharacter"
+            android:layout_width="214dp"
+            android:layout_height="42dp"
+            android:layout_gravity="center"
+            android:background="@drawable/button"
+            android:text="Wróć"
+            app:backgroundTint="@null" />
 
     </LinearLayout>
 

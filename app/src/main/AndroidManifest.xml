@@ -12,15 +12,15 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Projek_Wezwanie_Szalenstwa"
         tools:targetApi="31">
-
         <activity
-            android:name=".Postac.postac_gracza"
-            android:exported="false">
-        </activity>
+            android:name=".main_game"
+            android:exported="false" />
         <activity
-            android:name=".Postac.tworzenie_postaci"
-            android:exported="false">
-        </activity>
+            android:name=".postac_gracza"
+            android:exported="false"></activity>
+        <activity
+            android:name=".tworzenie_postaci"
+            android:exported="false"></activity>
         <activity
             android:name=".MainActivity"
             android:exported="true">

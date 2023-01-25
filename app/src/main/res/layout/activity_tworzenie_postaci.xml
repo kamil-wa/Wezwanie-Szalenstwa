@@ -5,7 +5,7 @@
     android:id="@+id/ro"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    tools:context=".Postac.tworzenie_postaci">
+    tools:context=".tworzenie_postaci">
 
     <LinearLayout
         android:layout_width="match_parent"
