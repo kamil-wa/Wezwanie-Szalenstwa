@@ -7,7 +7,7 @@ import android.view.View
 import android.widget.Button
 import android.widget.TextView
 
-    var playerCharacter = Character(0,0,0,0, 5,5, mutableListOf<String>())
+    var playerCharacter = Character(0,0,0,0, 5,5, mutableListOf<String>(),mutableListOf<Int>())
 
 class tworzenie_postaci : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -74,6 +74,9 @@ class tworzenie_postaci : AppCompatActivity() {
         playerCharacter.intelligence = Integer.parseInt(intelligenceTextView.text.toString())
         playerCharacter.cthulhu = Integer.parseInt(cthulhuTextView.text.toString())
         playerCharacter.luck = Integer.parseInt(luckTextView.text.toString())
+
+        playerCharacter.encounteredParagraphs.clear()
+        playerCharacter.inventory.clear()
 
         val startGameParagraf = Intent(this, main_game::class.java)
         startActivity(startGameParagraf)

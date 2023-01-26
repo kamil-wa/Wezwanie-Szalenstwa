@@ -18,12 +18,11 @@ class main_game : AppCompatActivity() {
     var answerOneID = 0
     var answerTwoID = 0
     var answerThreeID = 0
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main_game)
         initListeners()
-        initializeParagraphAndAnwers(1);
+        initializeParagraphAndAnswers(1);
     }
 
     private fun initListeners(){
@@ -33,8 +32,16 @@ class main_game : AppCompatActivity() {
         findViewById<Button>(R.id.answerThreeButton).setOnClickListener(ButtonAnswerThreeListener)
     }
 
-    private fun initializeParagraphAndAnwers(ID: Int){
+    private fun initializeParagraphAndAnswers(ID: Int){
         HPSet();
+
+        if(ID == 1000)
+        {
+            val startGameParagraf = Intent(this, main_game::class.java)
+            startActivity(startGameParagraf)
+        }
+
+        var canBeRepeated = false
 
         val mainTextView = findViewById<Button>(R.id.mainTextView) as TextView
 
@@ -44,28 +51,38 @@ class main_game : AppCompatActivity() {
         FirebaseFirestore.getInstance().collection("paragraphs").whereEqualTo("ID", ID).get().addOnCompleteListener { task ->
             if (task.isSuccessful) {
                 for (data in task.result) {
+                    playerCharacter.encounteredParagraphs.add(ID)
+
                     var string = data["description"].toString()
                     mainTextView.setText(string)
+
+                    if(data["requiresItem"] != null)
+                    {
+                        if(playerCharacter.inventory.contains((data["requiresItem"].toString())))
+                        {
+                            mainTextView.append(data["itemText"].toString())
+                        }
+                    }
+
+
                     if(data["testedAbility"] != null)
                     {
+                        canBeRepeated = true
                         var checkTest = Integer.parseInt(data["testedAbility"].toString())
-                        if(playerTest(checkTest))
+                        if(Integer.parseInt(data["testResolution"].toString()) == 1) //test powoduje dodanie itemków
                         {
-                            mainTextView.append(data["testSuccess"].toString())
-                            if(Integer.parseInt(data["testResolution"].toString()) == 1)
+                            if(playerTest(checkTest))
                             {
+                                mainTextView.append(data["testSuccess"].toString())
                                 val itemsSuccessList = data.get("itemsSuccess") as MutableList<String>
                                 for (items in itemsSuccessList)
                                 {
                                     playerCharacter.inventory.add(items)
                                 }
                             }
-                        }
-                        else
-                        {
-                            mainTextView.append(data["testFailed"].toString())
-                            if(Integer.parseInt(data["testResolution"].toString()) == 1)
+                            else
                             {
+                                mainTextView.append(data["testFailed"].toString())
                                 val itemsSuccessList = data.get("itemsFailed") as MutableList<String>
                                 for (items in itemsSuccessList)
                                 {
@@ -73,8 +90,11 @@ class main_game : AppCompatActivity() {
                                 }
                             }
                         }
+                        else if(Integer.parseInt(data["testResolution"].toString()) == 2) // test powoduje przejście do nowego paragrafu
+                        {
+
+                        }
                     }
-                    break
                 }
             }
         }
@@ -82,28 +102,45 @@ class main_game : AppCompatActivity() {
         FirebaseFirestore.getInstance().collection("answers").whereEqualTo("paragraphID", ID).get().addOnCompleteListener { task ->
             if (task.isSuccessful) {
                 for (data in task.result) {
+
+                    findViewById<Button>(R.id.answerOneButton).setVisibility(View.GONE)
                     findViewById<Button>(R.id.answerTwoButton).setVisibility(View.GONE)
                     findViewById<Button>(R.id.answerThreeButton).setVisibility(View.GONE)
 
-                    findViewById<Button>(R.id.answerOneButton).text = data["answerOneText"].toString()
-                    answerOneID = Integer.parseInt(data["answerOneID"].toString())
+                    val answersList = data.get("answers") as MutableList<String>
 
-                    if(Integer.parseInt(data["answersCount"].toString()) == 2)
+                    if(!playerCharacter.encounteredParagraphs.contains(Integer.parseInt(answersList[1])))
                     {
-                        findViewById<Button>(R.id.answerTwoButton).text = data["answerTwoText"].toString()
-                        answerTwoID = Integer.parseInt(data["answerTwoID"].toString())
-                        findViewById<Button>(R.id.answerTwoButton).setVisibility(View.VISIBLE)
+                        findViewById<Button>(R.id.answerOneButton).text = answersList[0]
+                        answerOneID = Integer.parseInt(answersList[1])
+                        findViewById<Button>(R.id.answerOneButton).setVisibility(View.VISIBLE)
                     }
 
-                    if(Integer.parseInt(data["answersCount"].toString()) == 3)
+                    if(answersList.size > 2)
                     {
-                        findViewById<Button>(R.id.answerTwoButton).text = data["answerTwoText"].toString()
-                        answerTwoID = Integer.parseInt(data["answerTwoID"].toString())
-                        findViewById<Button>(R.id.answerTwoButton).setVisibility(View.VISIBLE)
+                        if (!playerCharacter.encounteredParagraphs.contains(Integer.parseInt(answersList[3])))
+                        {
+                            findViewById<Button>(R.id.answerTwoButton).text = answersList[2]
+                            answerTwoID = Integer.parseInt(answersList[3])
+                            findViewById<Button>(R.id.answerTwoButton).setVisibility(View.VISIBLE)
+                        }
+                    }
 
-                        findViewById<Button>(R.id.answerThreeButton).text = data["answerThreeText"].toString()
-                        answerThreeID = Integer.parseInt(data["answerThreeID"].toString())
-                        findViewById<Button>(R.id.answerThreeButton).setVisibility(View.VISIBLE)
+                    if(answersList.size > 4)
+                    {
+                        if (!playerCharacter.encounteredParagraphs.contains(Integer.parseInt(answersList[5])))
+                        {
+                            findViewById<Button>(R.id.answerThreeButton).text = answersList[4]
+                            answerThreeID = Integer.parseInt(answersList[5])
+                            findViewById<Button>(R.id.answerThreeButton).setVisibility(View.VISIBLE)
+                        }
+                    }
+
+                    if(canBeRepeated)
+                    {
+                        findViewById<Button>(R.id.answerOneButton).text = answersList[0]
+                        answerOneID = Integer.parseInt(answersList[1])
+                        findViewById<Button>(R.id.answerOneButton).setVisibility(View.VISIBLE)
                     }
                 }
             }
@@ -210,15 +247,15 @@ class main_game : AppCompatActivity() {
     }
 
     private val ButtonAnswerOneListener = View.OnClickListener {
-        initializeParagraphAndAnwers(answerOneID)
+        initializeParagraphAndAnswers(answerOneID)
     }
 
     private val ButtonAnswerTwoListener = View.OnClickListener {
-        initializeParagraphAndAnwers(answerTwoID)
+        initializeParagraphAndAnswers(answerTwoID)
     }
 
     private val ButtonAnswerThreeListener = View.OnClickListener {
-        initializeParagraphAndAnwers(answerThreeID)
+        initializeParagraphAndAnswers(answerThreeID)
     }
 
 }

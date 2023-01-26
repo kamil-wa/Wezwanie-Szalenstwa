@@ -13,4 +13,13 @@
         <item name="android:statusBarColor">?attr/colorPrimaryVariant</item>
         <!-- Customize your theme here. -->
     </style>
+
+    <style name="Theme.Projek_Wezwanie_Szalenstwa.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="Theme.Projek_Wezwanie_Szalenstwa.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="Theme.Projek_Wezwanie_Szalenstwa.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 </resources>

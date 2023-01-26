@@ -13,14 +13,19 @@
         android:theme="@style/Theme.Projek_Wezwanie_Szalenstwa"
         tools:targetApi="31">
         <activity
+            android:name=".end_game"
+            android:exported="false"
+            android:label="@string/title_activity_end_game"
+            android:theme="@style/Theme.Projek_Wezwanie_Szalenstwa.NoActionBar" />
+        <activity
             android:name=".main_game"
             android:exported="false" />
         <activity
             android:name=".postac_gracza"
-            android:exported="false"></activity>
+            android:exported="false" />
         <activity
             android:name=".tworzenie_postaci"
-            android:exported="false"></activity>
+            android:exported="false" />
         <activity
             android:name=".MainActivity"
             android:exported="true">
