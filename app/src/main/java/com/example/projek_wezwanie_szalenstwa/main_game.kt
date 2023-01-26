@@ -1,6 +1,9 @@
 package com.example.projek_wezwanie_szalenstwa
 
 import android.content.Intent
+import android.graphics.text.LineBreaker.JUSTIFICATION_MODE_INTER_WORD
+import android.graphics.text.LineBreaker.JUSTIFICATION_MODE_NONE
+import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Debug
@@ -9,6 +12,7 @@ import android.view.View
 import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
+import androidx.annotation.RequiresApi
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
@@ -35,13 +39,13 @@ class main_game : AppCompatActivity() {
     private fun initializeParagraphAndAnswers(ID: Int){
         HPSet();
 
+        var canBeRepeated = false
+
         if(ID == 1000)
         {
             val startGameParagraf = Intent(this, main_game::class.java)
             startActivity(startGameParagraf)
         }
-
-        var canBeRepeated = false
 
         val mainTextView = findViewById<Button>(R.id.mainTextView) as TextView
 
@@ -67,13 +71,12 @@ class main_game : AppCompatActivity() {
 
                     if(data["testedAbility"] != null)
                     {
-                        canBeRepeated = true
                         var checkTest = Integer.parseInt(data["testedAbility"].toString())
                         if(Integer.parseInt(data["testResolution"].toString()) == 1) //test powoduje dodanie itemków
                         {
                             if(playerTest(checkTest))
                             {
-                                mainTextView.append(data["testSuccess"].toString())
+                                mainTextView.text = mainTextView.text.toString() + "\n Test udany!\n\n " + data["testSuccess"].toString()
                                 val itemsSuccessList = data.get("itemsSuccess") as MutableList<String>
                                 for (items in itemsSuccessList)
                                 {
@@ -82,7 +85,7 @@ class main_game : AppCompatActivity() {
                             }
                             else
                             {
-                                mainTextView.append(data["testFailed"].toString())
+                                mainTextView.text = mainTextView.text.toString() + "\n Test nieudany!\n\n " + data["testFailed"].toString()
                                 val itemsSuccessList = data.get("itemsFailed") as MutableList<String>
                                 for (items in itemsSuccessList)
                                 {
@@ -94,6 +97,7 @@ class main_game : AppCompatActivity() {
                         {
 
                         }
+                    canBeRepeated = true
                     }
                 }
             }
@@ -110,6 +114,12 @@ class main_game : AppCompatActivity() {
                     val answersList = data.get("answers") as MutableList<String>
 
                     if(!playerCharacter.encounteredParagraphs.contains(Integer.parseInt(answersList[1])))
+                    {
+                        findViewById<Button>(R.id.answerOneButton).text = answersList[0]
+                        answerOneID = Integer.parseInt(answersList[1])
+                        findViewById<Button>(R.id.answerOneButton).setVisibility(View.VISIBLE)
+                    }
+                    else if(canBeRepeated)
                     {
                         findViewById<Button>(R.id.answerOneButton).text = answersList[0]
                         answerOneID = Integer.parseInt(answersList[1])
@@ -135,13 +145,6 @@ class main_game : AppCompatActivity() {
                             findViewById<Button>(R.id.answerThreeButton).setVisibility(View.VISIBLE)
                         }
                     }
-
-                    if(canBeRepeated)
-                    {
-                        findViewById<Button>(R.id.answerOneButton).text = answersList[0]
-                        answerOneID = Integer.parseInt(answersList[1])
-                        findViewById<Button>(R.id.answerOneButton).setVisibility(View.VISIBLE)
-                    }
                 }
             }
         }
@@ -151,7 +154,6 @@ class main_game : AppCompatActivity() {
     {
         val hpText = findViewById<Button>(R.id.HPView) as TextView
         hpText.setText("HP: " + playerCharacter.HP.toString())
-
     }
 
     private fun playerTest(abilityID: Int): Boolean
@@ -160,83 +162,38 @@ class main_game : AppCompatActivity() {
 
         if(abilityID == 1)
         {
-            mainTextView.append("\n \n Test siły!")
             val rolld100 = (1..100).random()
-            mainTextView.append("\n Rzuciłeś: " + rolld100.toString() + " vs twoja siłą równa: " + playerCharacter.strength)
+            mainTextView.text = mainTextView.text.toString() + "\n\n Test siły! \n Rzuciłeś: " + rolld100.toString() + " vs twoja siłą równa: " + playerCharacter.strength + " "
 
-            if(rolld100 <= playerCharacter.strength)
-            {
-                mainTextView.append("\nTest udany!\n\n")
-                return true
-            }
-            else{
-                mainTextView.append("\nTest nieudany!\n\n")
-                return false
-            }
+            return rolld100 <= playerCharacter.strength
         }
         else if(abilityID == 2)
         {
-            mainTextView.append("\n \n Test inteligencji!")
             val rolld100 = (1..100).random()
-            mainTextView.append("\n Rzuciłeś: " + rolld100.toString() + " vs twoja inteligencja równa: " + playerCharacter.dexterity)
+            mainTextView.text = mainTextView.text.toString() + "\n\n Test inteligencji! \n Rzuciłeś: " + rolld100.toString() + " vs twoja inteligencja równa: " + playerCharacter.dexterity + " "
 
-            if(rolld100 <= playerCharacter.intelligence)
-            {
-                mainTextView.append("\nTest udany!\n\n")
-                return true
-            }
-            else{
-                mainTextView.append("\nTest nieudany!\n\n")
-                return false
-            }
+            return rolld100 <= playerCharacter.intelligence
         }
         else if(abilityID == 3)
         {
-            mainTextView.append("\n \n Test wiedzy!")
             val rolld100 = (1..100).random()
-            mainTextView.append("\n Rzuciłeś: " + rolld100.toString() + " vs twoja wiedza równa: " + playerCharacter.intelligence)
+            mainTextView.text = mainTextView.text.toString() + "\n\n Test wiedzy! \n Rzuciłeś: " + rolld100.toString() + " vs twoja wiedza równa: " + playerCharacter.intelligence + " "
 
-            if(rolld100 <= playerCharacter.intelligence)
-            {
-                mainTextView.append("\nTest udany!\n\n")
-                return true
-            }
-            else{
-                mainTextView.append("\nTest nieudany!\n\n")
-                return false
-            }
+            return rolld100 <= playerCharacter.intelligence
         }
         else if(abilityID == 4)
         {
-            mainTextView.append("\n \n Test mitów!")
             val rolld100 = (1..100).random()
-            mainTextView.append("\nRzuciłeś: " + rolld100.toString() + " vs twoje mity równe: " + playerCharacter.cthulhu)
+            mainTextView.text = mainTextView.text.toString() + "\n\n Test mitów! \n Rzuciłeś: " + rolld100.toString() + " vs twoje mity równe: " + playerCharacter.cthulhu + " "
 
-            if(rolld100 <= playerCharacter.cthulhu)
-            {
-                mainTextView.append("\nTest udany!\n\n")
-                return true
-            }
-            else{
-                mainTextView.append("\nTest nieudany!\n\n")
-                return false
-            }
+            return rolld100 <= playerCharacter.cthulhu
         }
         else if(abilityID == 5)
         {
-            mainTextView.append("\n \n Test szczęścia! ")
             val rolld100 = (1..100).random()
-            mainTextView.append("\n Rzuciłeś: " + rolld100.toString() + " vs twoje szczęście równe: " + playerCharacter.luck)
+            mainTextView.text = mainTextView.text.toString() + "\n\n Test szczęścia! \n Rzuciłeś: " + rolld100.toString() + " vs twoje szczęście równe: " + playerCharacter.luck + " "
 
-            if(rolld100 <= playerCharacter.luck)
-            {
-                mainTextView.append("\nTest udany!\n\n")
-                return true
-            }
-            else{
-                mainTextView.append("\nTest nieudany!\n\n")
-                return false
-            }
+            return rolld100 <= playerCharacter.luck
         }
         return false
     }

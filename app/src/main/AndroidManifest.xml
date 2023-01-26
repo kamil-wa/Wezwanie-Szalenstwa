@@ -10,13 +10,13 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.Projek_Wezwanie_Szalenstwa"
+        android:theme="@style/Theme.MaterialComponents.NoActionBar"
         tools:targetApi="31">
         <activity
             android:name=".end_game"
             android:exported="false"
             android:label="@string/title_activity_end_game"
-            android:theme="@style/Theme.Projek_Wezwanie_Szalenstwa.NoActionBar" />
+            android:theme="@style/Theme.MaterialComponents.NoActionBar" />
         <activity
             android:name=".main_game"
             android:exported="false" />

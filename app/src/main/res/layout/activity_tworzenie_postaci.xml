@@ -276,8 +276,11 @@
             android:layout_width="214dp"
             android:layout_height="42dp"
             android:layout_gravity="center"
+            android:layout_marginTop="50px"
             android:background="@drawable/button"
+            android:fontFamily="@font/alatsi"
             android:text="Zaakceptuj"
+            android:textColor="#FFFFFF"
             app:backgroundTint="@null" />
 
     </LinearLayout>

@@ -301,7 +301,9 @@
             android:layout_height="42dp"
             android:layout_gravity="center"
             android:background="@drawable/button"
+            android:fontFamily="@font/alatsi"
             android:text="Wróć"
+            android:textColor="#FFFFFF"
             app:backgroundTint="@null" />
 
     </LinearLayout>

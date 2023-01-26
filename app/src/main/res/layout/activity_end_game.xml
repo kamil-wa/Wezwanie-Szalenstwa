@@ -32,7 +32,9 @@
             android:layout_gravity="center"
             android:layout_marginTop="30px"
             android:background="@drawable/button"
+            android:fontFamily="@font/alatsi"
             android:text="Powrót do głównego menu"
+            android:textColor="#FFFFFF"
             android:textSize="12sp"
             app:backgroundTint="@null" />
 
