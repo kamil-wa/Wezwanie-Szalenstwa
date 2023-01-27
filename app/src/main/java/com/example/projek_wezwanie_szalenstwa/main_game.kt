@@ -124,6 +124,17 @@ class main_game : AppCompatActivity() {
                                 findViewById<Button>(R.id.answerOneButton).setVisibility(View.VISIBLE)
                             }
                         }
+                        else if(Integer.parseInt(data["testResolution"].toString()) == 3) //test powoduje nowy tekst
+                        {
+                            if(playerTest(checkTest))
+                            {
+                                mainTextView.text = mainTextView.text.toString() + "\n Test udany!\n\n " + data["testSuccess"].toString()
+                            }
+                            else
+                            {
+                                mainTextView.text = mainTextView.text.toString() + "\n Test nieudany!\n\n " + data["testFailed"].toString()
+                            }
+                        }
                     }
                 }
             }
