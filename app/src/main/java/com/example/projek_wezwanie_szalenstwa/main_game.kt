@@ -58,7 +58,7 @@ class main_game : AppCompatActivity() {
         playerCharacter.HP -= HP
     }
 
-    private fun checkItemInInventory(item: String): Boolean
+    fun checkItemInInventory(item: String): Boolean
     {
         return playerCharacter.inventory.contains(item)
     }
@@ -237,7 +237,7 @@ class main_game : AppCompatActivity() {
         hpText.setText("HP: " + playerCharacter.HP.toString())
     }
 
-    private fun roll1d100(): Int
+    fun roll1d100(): Int
     {
         return (1..100).random()
     }

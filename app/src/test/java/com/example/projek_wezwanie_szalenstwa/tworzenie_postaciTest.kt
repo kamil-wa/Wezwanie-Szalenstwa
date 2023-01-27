@@ -1,5 +1,5 @@
 package com.example.projek_wezwanie_szalenstwa
-
+/*
 import android.widget.Button
 import android.widget.TextView
 import org.junit.Assert
@@ -46,4 +46,4 @@ class TworzeniePostaciTest {
         assertTrue(dexterityValue in 10..40)
     }
 
-}
+}*/

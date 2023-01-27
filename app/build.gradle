@@ -4,6 +4,7 @@ plugins {
     id 'com.google.gms.google-services'
 }
 
+
 android {
     namespace 'com.example.projek_wezwanie_szalenstwa'
     compileSdk 33
@@ -34,6 +35,8 @@ android {
     buildFeatures {
         viewBinding true
     }
+
+
 }
 
 dependencies {
@@ -83,4 +86,8 @@ dependencies {
     testImplementation 'org.robolectric:robolectric:4.4'
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.7.0'
     testImplementation 'org.junit.jupiter:junit-jupiter:5.7.0'
+
+    testImplementation "androidx.arch.core:core-testing:2.1.0"
+
+
 }
