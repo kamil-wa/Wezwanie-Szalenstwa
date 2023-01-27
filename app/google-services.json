@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "663095036744",
+    "project_id": "callofmadness-3d2ad",
+    "storage_bucket": "callofmadness-3d2ad.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:663095036744:android:c1ed9d384b004d5dd0417d",
+        "android_client_info": {
+          "package_name": "com.example.projek_wezwanie_szalenstwa"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "663095036744-9oe77unc0b75q0ep240lho95i5o7qs5r.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBZJNL0oXyLEL-y9vMUpTopCOeOzpVtvj0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "663095036744-9oe77unc0b75q0ep240lho95i5o7qs5r.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

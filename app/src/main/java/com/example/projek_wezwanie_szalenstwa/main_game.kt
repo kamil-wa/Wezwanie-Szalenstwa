@@ -39,8 +39,6 @@ class main_game : AppCompatActivity() {
     private fun initializeParagraphAndAnswers(ID: Int){
         HPSet();
 
-        var canBeRepeated = false
-
         if(ID == 1000)
         {
             val startGameParagraf = Intent(this, main_game::class.java)
@@ -49,6 +47,7 @@ class main_game : AppCompatActivity() {
 
         val mainTextView = findViewById<Button>(R.id.mainTextView) as TextView
 
+        findViewById<Button>(R.id.answerOneButton).setVisibility(View.GONE)
         findViewById<Button>(R.id.answerTwoButton).setVisibility(View.GONE)
         findViewById<Button>(R.id.answerThreeButton).setVisibility(View.GONE)
 
@@ -62,7 +61,24 @@ class main_game : AppCompatActivity() {
 
                     if(data["requiresItem"] != null)
                     {
-                        if(playerCharacter.inventory.contains((data["requiresItem"].toString())))
+                        if(data["itsAFight"] != null)
+                        {
+                            if(playerCharacter.inventory.contains((data["requiresItem"].toString())))
+                            {
+                                playerCharacter.HP -= Integer.parseInt(data["lostHP"].toString())
+                                findViewById<Button>(R.id.answerOneButton).text = "Kontynuuj"
+                                answerOneID = Integer.parseInt(data["battleSuccessID"].toString())
+                                findViewById<Button>(R.id.answerOneButton).setVisibility(View.VISIBLE)
+                            }
+                            else
+                            {
+                                playerCharacter.HP = 0
+                                findViewById<Button>(R.id.answerOneButton).text = "Kontynuuj"
+                                answerOneID = Integer.parseInt(data["battleFailedID"].toString())
+                                findViewById<Button>(R.id.answerOneButton).setVisibility(View.VISIBLE)
+                            }
+                        }
+                        else if(playerCharacter.inventory.contains((data["requiresItem"].toString())))
                         {
                             mainTextView.append(data["itemText"].toString())
                         }
@@ -95,9 +111,19 @@ class main_game : AppCompatActivity() {
                         }
                         else if(Integer.parseInt(data["testResolution"].toString()) == 2) // test powoduje przejście do nowego paragrafu
                         {
-
+                            if(playerTest(checkTest))
+                            {
+                                findViewById<Button>(R.id.answerOneButton).text = "Kontynuuj"
+                                answerOneID = Integer.parseInt(data["testSuccessID"].toString())
+                                findViewById<Button>(R.id.answerOneButton).setVisibility(View.VISIBLE)
+                            }
+                            else
+                            {
+                                findViewById<Button>(R.id.answerOneButton).text = "Kontynuuj"
+                                answerOneID = Integer.parseInt(data["testFailedID"].toString())
+                                findViewById<Button>(R.id.answerOneButton).setVisibility(View.VISIBLE)
+                            }
                         }
-                    canBeRepeated = true
                     }
                 }
             }
@@ -106,20 +132,27 @@ class main_game : AppCompatActivity() {
         FirebaseFirestore.getInstance().collection("answers").whereEqualTo("paragraphID", ID).get().addOnCompleteListener { task ->
             if (task.isSuccessful) {
                 for (data in task.result) {
-
-                    findViewById<Button>(R.id.answerOneButton).setVisibility(View.GONE)
-                    findViewById<Button>(R.id.answerTwoButton).setVisibility(View.GONE)
-                    findViewById<Button>(R.id.answerThreeButton).setVisibility(View.GONE)
-
                     val answersList = data.get("answers") as MutableList<String>
 
                     if(!playerCharacter.encounteredParagraphs.contains(Integer.parseInt(answersList[1])))
                     {
-                        findViewById<Button>(R.id.answerOneButton).text = answersList[0]
-                        answerOneID = Integer.parseInt(answersList[1])
-                        findViewById<Button>(R.id.answerOneButton).setVisibility(View.VISIBLE)
+                        if(data["answerOneRequiredItem"] != null)
+                        {
+                            if(playerCharacter.inventory.contains((data["answerOneRequiredItem"].toString())))
+                            {
+                                findViewById<Button>(R.id.answerOneButton).text = answersList[0]
+                                answerOneID = Integer.parseInt(answersList[1])
+                                findViewById<Button>(R.id.answerOneButton).setVisibility(View.VISIBLE)
+                            }
+                        }
+                        else
+                        {
+                            findViewById<Button>(R.id.answerOneButton).text = answersList[0]
+                            answerOneID = Integer.parseInt(answersList[1])
+                            findViewById<Button>(R.id.answerOneButton).setVisibility(View.VISIBLE)
+                        }
                     }
-                    else if(canBeRepeated)
+                    else if(data["forceAnswer"] != null)
                     {
                         findViewById<Button>(R.id.answerOneButton).text = answersList[0]
                         answerOneID = Integer.parseInt(answersList[1])
@@ -130,9 +163,20 @@ class main_game : AppCompatActivity() {
                     {
                         if (!playerCharacter.encounteredParagraphs.contains(Integer.parseInt(answersList[3])))
                         {
-                            findViewById<Button>(R.id.answerTwoButton).text = answersList[2]
-                            answerTwoID = Integer.parseInt(answersList[3])
-                            findViewById<Button>(R.id.answerTwoButton).setVisibility(View.VISIBLE)
+                            if(data["answerOneRequiredItem"] != null)
+                            {
+                                if(playerCharacter.inventory.contains((data["answerOneRequiredItem"].toString())))
+                                {
+                                    findViewById<Button>(R.id.answerTwoButton).text = answersList[2]
+                                    answerTwoID = Integer.parseInt(answersList[3])
+                                    findViewById<Button>(R.id.answerTwoButton).setVisibility(View.VISIBLE)
+                                }
+                            }
+                            else {
+                                findViewById<Button>(R.id.answerTwoButton).text = answersList[2]
+                                answerTwoID = Integer.parseInt(answersList[3])
+                                findViewById<Button>(R.id.answerTwoButton).setVisibility(View.VISIBLE)
+                            }
                         }
                     }
 
@@ -140,9 +184,20 @@ class main_game : AppCompatActivity() {
                     {
                         if (!playerCharacter.encounteredParagraphs.contains(Integer.parseInt(answersList[5])))
                         {
-                            findViewById<Button>(R.id.answerThreeButton).text = answersList[4]
-                            answerThreeID = Integer.parseInt(answersList[5])
-                            findViewById<Button>(R.id.answerThreeButton).setVisibility(View.VISIBLE)
+                            if(data["answerOneRequiredItem"] != null)
+                            {
+                                if(playerCharacter.inventory.contains((data["answerOneRequiredItem"].toString())))
+                                {
+                                    findViewById<Button>(R.id.answerThreeButton).text = answersList[4]
+                                    answerThreeID = Integer.parseInt(answersList[5])
+                                    findViewById<Button>(R.id.answerThreeButton).setVisibility(View.VISIBLE)
+                                }
+                            }
+                            else {
+                                findViewById<Button>(R.id.answerThreeButton).text = answersList[4]
+                                answerThreeID = Integer.parseInt(answersList[5])
+                                findViewById<Button>(R.id.answerThreeButton).setVisibility(View.VISIBLE)
+                            }
                         }
                     }
                 }
@@ -159,43 +214,32 @@ class main_game : AppCompatActivity() {
     private fun playerTest(abilityID: Int): Boolean
     {
         val mainTextView = findViewById<TextView>(R.id.mainTextView) as TextView
+        val rolld100 = (1..100).random()
 
-        if(abilityID == 1)
-        {
-            val rolld100 = (1..100).random()
-            mainTextView.text = mainTextView.text.toString() + "\n\n Test siły! \n Rzuciłeś: " + rolld100.toString() + " vs twoja siłą równa: " + playerCharacter.strength + " "
+        when (abilityID) {
+            1 -> {
 
-            return rolld100 <= playerCharacter.strength
+                mainTextView.text = mainTextView.text.toString() + "\n\n Test siły! \n Rzuciłeś: " + rolld100.toString() + " vs twoja siłą równa: " + playerCharacter.strength + " "
+                return rolld100 <= playerCharacter.strength
+            }
+            2 -> {
+                mainTextView.text = mainTextView.text.toString() + "\n\n Test inteligencji! \n Rzuciłeś: " + rolld100.toString() + " vs twoja inteligencja równa: " + playerCharacter.dexterity + " "
+                return rolld100 <= playerCharacter.intelligence
+            }
+            3 -> {
+                mainTextView.text = mainTextView.text.toString() + "\n\n Test wiedzy! \n Rzuciłeś: " + rolld100.toString() + " vs twoja wiedza równa: " + playerCharacter.intelligence + " "
+                return rolld100 <= playerCharacter.intelligence
+            }
+            4 -> {
+                mainTextView.text = mainTextView.text.toString() + "\n\n Test mitów! \n Rzuciłeś: " + rolld100.toString() + " vs twoje mity równe: " + playerCharacter.cthulhu + " "
+                return rolld100 <= playerCharacter.cthulhu
+            }
+            5 -> {
+                mainTextView.text = mainTextView.text.toString() + "\n\n Test szczęścia! \n Rzuciłeś: " + rolld100.toString() + " vs twoje szczęście równe: " + playerCharacter.luck + " "
+                return rolld100 <= playerCharacter.luck
+            }
+            else -> return false
         }
-        else if(abilityID == 2)
-        {
-            val rolld100 = (1..100).random()
-            mainTextView.text = mainTextView.text.toString() + "\n\n Test inteligencji! \n Rzuciłeś: " + rolld100.toString() + " vs twoja inteligencja równa: " + playerCharacter.dexterity + " "
-
-            return rolld100 <= playerCharacter.intelligence
-        }
-        else if(abilityID == 3)
-        {
-            val rolld100 = (1..100).random()
-            mainTextView.text = mainTextView.text.toString() + "\n\n Test wiedzy! \n Rzuciłeś: " + rolld100.toString() + " vs twoja wiedza równa: " + playerCharacter.intelligence + " "
-
-            return rolld100 <= playerCharacter.intelligence
-        }
-        else if(abilityID == 4)
-        {
-            val rolld100 = (1..100).random()
-            mainTextView.text = mainTextView.text.toString() + "\n\n Test mitów! \n Rzuciłeś: " + rolld100.toString() + " vs twoje mity równe: " + playerCharacter.cthulhu + " "
-
-            return rolld100 <= playerCharacter.cthulhu
-        }
-        else if(abilityID == 5)
-        {
-            val rolld100 = (1..100).random()
-            mainTextView.text = mainTextView.text.toString() + "\n\n Test szczęścia! \n Rzuciłeś: " + rolld100.toString() + " vs twoje szczęście równe: " + playerCharacter.luck + " "
-
-            return rolld100 <= playerCharacter.luck
-        }
-        return false
     }
 
     private val ButtonCharacterListener = View.OnClickListener {
