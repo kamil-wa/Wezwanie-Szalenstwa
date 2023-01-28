@@ -53,7 +53,7 @@ class main_game : AppCompatActivity() {
         playerCharacter.encounteredParagraphs.add(ID)
     }
 
-    private fun decreasePlayerHP(HP: Int)
+    fun decreasePlayerHP(HP: Int)
     {
         playerCharacter.HP -= HP
     }
@@ -231,7 +231,7 @@ class main_game : AppCompatActivity() {
         loadAnswers(ID)
     }
 
-    private fun HPSet()
+    fun HPSet()
     {
         val hpText = findViewById<Button>(R.id.HPView) as TextView
         hpText.setText("HP: " + playerCharacter.HP.toString())

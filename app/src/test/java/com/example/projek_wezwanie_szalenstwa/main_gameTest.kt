@@ -24,4 +24,13 @@ class main_gameTest {
         val result = acrivity.roll1d100()
         assertTrue(result >= 1 && result <= 100)
     }
+
+
+    @Test
+    fun testDecreasePlayerHP() {
+        val acrivity = main_game()
+        val playerCharacter = Character(1,2,3,4,5,2,mutableListOf<String>(),mutableListOf<Int>())
+        acrivity.decreasePlayerHP(2)
+        assertEquals(1, playerCharacter.HP)
+    }
 }
