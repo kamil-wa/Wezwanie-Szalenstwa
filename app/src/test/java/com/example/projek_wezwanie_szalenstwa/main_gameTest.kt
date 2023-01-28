@@ -38,7 +38,21 @@ class main_gameTest {
         val acrivity = main_game()
         var tp = tworzenie_postaci()
         acrivity.addEncounteredParagraph(5)
-        assertEquals(5, playerCharacter.encounteredParagraphs[0])
+        val encList = playerCharacter.encounteredParagraphs
+        for (i in 0..encList.size){
+            assertEquals(5, playerCharacter.encounteredParagraphs[0])
+        }
+    }
+
+    @Test
+    fun testIfItemIsInInventory() {
+        val activity = main_game()
+        var tp = tworzenie_postaci()
+        var items = listOf<String>("Item1","Item2","Item3")
+        playerCharacter.inventory.addAll(items)
+
+        assertTrue(activity.checkItemInInventory("Item2"))
+
     }
 
 
