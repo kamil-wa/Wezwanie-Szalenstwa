@@ -48,7 +48,7 @@ class main_game : AppCompatActivity() {
         if(ID == 1000) startActivity(Intent(this, main_game::class.java))
     }
 
-    private fun addEncounteredParagraph(ID: Int)
+    fun addEncounteredParagraph(ID: Int)
     {
         playerCharacter.encounteredParagraphs.add(ID)
     }

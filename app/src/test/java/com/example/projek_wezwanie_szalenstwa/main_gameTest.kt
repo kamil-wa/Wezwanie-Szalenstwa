@@ -2,7 +2,6 @@ package com.example.projek_wezwanie_szalenstwa
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 
 
-import org.junit.Assert
 import org.junit.Assert.*
 import org.junit.Rule
 
@@ -29,8 +28,19 @@ class main_gameTest {
     @Test
     fun testDecreasePlayerHP() {
         val acrivity = main_game()
-        val playerCharacter = Character(1,2,3,4,5,2,mutableListOf<String>(),mutableListOf<Int>())
+        var tp = tworzenie_postaci()
         acrivity.decreasePlayerHP(2)
-        assertEquals(1, playerCharacter.HP)
+        assertEquals(3, playerCharacter.HP)
     }
+
+    @Test
+    fun testAddCompletedParagraphToAPlayer() {
+        val acrivity = main_game()
+        var tp = tworzenie_postaci()
+        acrivity.addEncounteredParagraph(5)
+        assertEquals(5, playerCharacter.encounteredParagraphs[0])
+    }
+
+
+
 }
