@@ -88,6 +88,51 @@ class main_game : AppCompatActivity() {
         }
     }
 
+    private fun addItemsAfterTest(test: Int, mainTextView: TextView, textSuccess: String, itemsSuccess: MutableList<String>, textFailed: String, itemsFailed: MutableList<String>)
+    {
+        if(playerTest(test, roll1d100()))
+        {
+            mainTextView.text = mainTextView.text.toString() + "\n Test udany!\n\n " + textSuccess
+            val itemsSuccessList = itemsSuccess
+            for (items in itemsSuccessList)
+            {
+                playerCharacter.inventory.add(items)
+            }
+        }
+        else
+        {
+            mainTextView.text = mainTextView.text.toString() + "\n Test nieudany!\n\n " + textFailed
+            val itemsSuccessList = itemsFailed
+            for (items in itemsSuccessList)
+            {
+                playerCharacter.inventory.add(items)
+            }
+        }
+    }
+
+    private fun moveToParagraphAfterTest(test: Int, testSuccess: String, testFailed: String)
+    {
+        if(playerTest(test, roll1d100()))
+        {
+            findViewById<Button>(R.id.answerOneButton).text = "Kontynuuj"
+            answerOneID = Integer.parseInt(testSuccess)
+            findViewById<Button>(R.id.answerOneButton).setVisibility(View.VISIBLE)
+        }
+        else
+        {
+            findViewById<Button>(R.id.answerOneButton).text = "Kontynuuj"
+            answerOneID = Integer.parseInt(testFailed)
+            findViewById<Button>(R.id.answerOneButton).setVisibility(View.VISIBLE)
+        }
+    }
+
+    private fun showTextAfterParagraph(test: Int, mainTextView: TextView, textSuccess: String, textFailed: String)
+    {
+        if(playerTest(test, roll1d100())) mainTextView.text = mainTextView.text.toString() + "\n Test udany!\n\n " + textSuccess
+        else mainTextView.text = mainTextView.text.toString() + "\n Test nieudany!\n\n " + textFailed
+    }
+
+
     private fun loadParagraph(ID: Int)
     {
         val mainTextView = findViewById<Button>(R.id.mainTextView) as TextView
@@ -109,42 +154,13 @@ class main_game : AppCompatActivity() {
 
                         when (Integer.parseInt(data["testResolution"].toString())) {
                             1 -> {
-                                if(playerTest(checkTest, roll1d100()))
-                                {
-                                    mainTextView.text = mainTextView.text.toString() + "\n Test udany!\n\n " + data["testSuccess"].toString()
-                                    val itemsSuccessList = data.get("itemsSuccess") as MutableList<String>
-                                    for (items in itemsSuccessList)
-                                    {
-                                        playerCharacter.inventory.add(items)
-                                    }
-                                }
-                                else
-                                {
-                                    mainTextView.text = mainTextView.text.toString() + "\n Test nieudany!\n\n " + data["testFailed"].toString()
-                                    val itemsSuccessList = data.get("itemsFailed") as MutableList<String>
-                                    for (items in itemsSuccessList)
-                                    {
-                                        playerCharacter.inventory.add(items)
-                                    }
-                                }
+                                addItemsAfterTest(checkTest, mainTextView, data["testSuccess"].toString(), data.get("itemsSuccess") as MutableList<String>, data["testFailed"].toString(), data.get("itemsFailed") as MutableList<String>)
                             }
                             2 -> {
-                                if(playerTest(checkTest, roll1d100()))
-                                {
-                                    findViewById<Button>(R.id.answerOneButton).text = "Kontynuuj"
-                                    answerOneID = Integer.parseInt(data["testSuccessID"].toString())
-                                    findViewById<Button>(R.id.answerOneButton).setVisibility(View.VISIBLE)
-                                }
-                                else
-                                {
-                                    findViewById<Button>(R.id.answerOneButton).text = "Kontynuuj"
-                                    answerOneID = Integer.parseInt(data["testFailedID"].toString())
-                                    findViewById<Button>(R.id.answerOneButton).setVisibility(View.VISIBLE)
-                                }
+                                moveToParagraphAfterTest(checkTest, data["testSuccessID"].toString(), data["testFailedID"].toString())
                             }
                             3 -> {
-                                if(playerTest(checkTest, roll1d100())) mainTextView.text = mainTextView.text.toString() + "\n Test udany!\n\n " + data["testSuccess"].toString()
-                                else mainTextView.text = mainTextView.text.toString() + "\n Test nieudany!\n\n " + data["testFailed"].toString()
+                                showTextAfterParagraph(checkTest, mainTextView, data["testSuccess"].toString(), data["testFailed"].toString())
                             }
                         }
                     }
