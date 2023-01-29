@@ -45,7 +45,7 @@ class main_game : AppCompatActivity() {
 
     private fun checkIfComplete(ID: Int)
     {
-        if(ID == 1000) startActivity(Intent(this, main_game::class.java))
+        if(ID == 1000) startActivity(Intent(this, end_game::class.java))
     }
 
     fun addEncounteredParagraph(ID: Int)
@@ -61,6 +61,11 @@ class main_game : AppCompatActivity() {
     fun checkItemInInventory(item: String): Boolean
     {
         return playerCharacter.inventory.contains(item)
+    }
+
+    fun addItemToInventory(item: String)
+    {
+        playerCharacter.inventory.add(item)
     }
 
     private fun battleTime(requiredWeapon: String, hpLost: Int, successID: Int, failedID: Int)
@@ -165,6 +170,13 @@ class main_game : AppCompatActivity() {
                                 findViewById<Button>(R.id.answerOneButton).setVisibility(View.VISIBLE)
                             }
                         }
+                        else if(data["answerOneGivesItem"] != null)
+                        {
+                            addItemToInventory(data["answerOneGivesItem"].toString())
+                            findViewById<Button>(R.id.answerOneButton).text = answersList[2]
+                            answerTwoID = Integer.parseInt(answersList[3])
+                            findViewById<Button>(R.id.answerOneButton).setVisibility(View.VISIBLE)
+                        }
                         else
                         {
                             findViewById<Button>(R.id.answerOneButton).text = answersList[0]
@@ -192,6 +204,13 @@ class main_game : AppCompatActivity() {
                                     findViewById<Button>(R.id.answerTwoButton).setVisibility(View.VISIBLE)
                                 }
                             }
+                            else if(data["answerTwoGivesItem"] != null)
+                            {
+                                addItemToInventory(data["answerTwoGivesItem"].toString())
+                                findViewById<Button>(R.id.answerTwoButton).text = answersList[2]
+                                answerTwoID = Integer.parseInt(answersList[3])
+                                findViewById<Button>(R.id.answerTwoButton).setVisibility(View.VISIBLE)
+                            }
                             else {
                                 findViewById<Button>(R.id.answerTwoButton).text = answersList[2]
                                 answerTwoID = Integer.parseInt(answersList[3])
@@ -199,6 +218,7 @@ class main_game : AppCompatActivity() {
                             }
                         }
                     }
+
                     if(answersList.size > 4)
                     {
                         if (!playerCharacter.encounteredParagraphs.contains(Integer.parseInt(answersList[5])))
@@ -211,6 +231,13 @@ class main_game : AppCompatActivity() {
                                     answerThreeID = Integer.parseInt(answersList[5])
                                     findViewById<Button>(R.id.answerThreeButton).setVisibility(View.VISIBLE)
                                 }
+                            }
+                            else if(data["answerThreeGivesItem"] != null)
+                            {
+                                addItemToInventory(data["answerThreeGivesItem"].toString())
+                                findViewById<Button>(R.id.answerThreeButton).text = answersList[4]
+                                answerThreeID = Integer.parseInt(answersList[5])
+                                findViewById<Button>(R.id.answerThreeButton).setVisibility(View.VISIBLE)
                             }
                             else {
                                 findViewById<Button>(R.id.answerThreeButton).text = answersList[4]

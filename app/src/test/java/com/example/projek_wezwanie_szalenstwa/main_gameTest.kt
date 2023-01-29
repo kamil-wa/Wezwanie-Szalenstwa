@@ -24,6 +24,16 @@ class main_gameTest {
         assertTrue(result >= 1 && result <= 100)
     }
 
+    @Test
+    fun addItemToInventory()
+    {
+        val acrivity = main_game()
+        acrivity.addItemToInventory("test")
+        val encList = playerCharacter.inventory
+        for (i in 0..encList.size){
+            assertEquals("test", playerCharacter.inventory[0])
+        }
+    }
 
     @Test
     fun testDecreasePlayerHP() {
