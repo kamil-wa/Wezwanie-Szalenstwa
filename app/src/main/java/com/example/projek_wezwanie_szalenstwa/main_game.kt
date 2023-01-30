@@ -22,6 +22,11 @@ class main_game : AppCompatActivity() {
     var answerOneID = 0
     var answerTwoID = 0
     var answerThreeID = 0
+
+    var itemOneToGive = ""
+    var itemTwoToGive = ""
+    var itemThreeToGive = ""
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main_game)
@@ -188,9 +193,9 @@ class main_game : AppCompatActivity() {
                         }
                         else if(data["answerOneGivesItem"] != null)
                         {
-                            addItemToInventory(data["answerOneGivesItem"].toString())
-                            findViewById<Button>(R.id.answerOneButton).text = answersList[2]
-                            answerTwoID = Integer.parseInt(answersList[3])
+                            itemOneToGive = data["answerOneGivesItem"].toString()
+                            findViewById<Button>(R.id.answerOneButton).text = answersList[0]
+                            answerOneID = Integer.parseInt(answersList[1])
                             findViewById<Button>(R.id.answerOneButton).setVisibility(View.VISIBLE)
                         }
                         else
@@ -222,7 +227,7 @@ class main_game : AppCompatActivity() {
                             }
                             else if(data["answerTwoGivesItem"] != null)
                             {
-                                addItemToInventory(data["answerTwoGivesItem"].toString())
+                                itemTwoToGive = data["answerTwoGivesItem"].toString()
                                 findViewById<Button>(R.id.answerTwoButton).text = answersList[2]
                                 answerTwoID = Integer.parseInt(answersList[3])
                                 findViewById<Button>(R.id.answerTwoButton).setVisibility(View.VISIBLE)
@@ -250,7 +255,7 @@ class main_game : AppCompatActivity() {
                             }
                             else if(data["answerThreeGivesItem"] != null)
                             {
-                                addItemToInventory(data["answerThreeGivesItem"].toString())
+                                itemThreeToGive = data["answerThreeGivesItem"].toString()
                                 findViewById<Button>(R.id.answerThreeButton).text = answersList[4]
                                 answerThreeID = Integer.parseInt(answersList[5])
                                 findViewById<Button>(R.id.answerThreeButton).setVisibility(View.VISIBLE)
@@ -268,6 +273,7 @@ class main_game : AppCompatActivity() {
     }
 
     private fun initializeParagraphAndAnswers(ID: Int){
+        HPSet()
         checkIfComplete(ID)
         hideButtons()
         loadParagraph(ID)
@@ -296,8 +302,8 @@ class main_game : AppCompatActivity() {
                 return roll <= playerCharacter.strength
             }
             2 -> {
-                mainTextView.text = mainTextView.text.toString() + "\n\n Test inteligencji! \n Rzuciłeś: " + roll.toString() + " vs twoja inteligencja równa: " + playerCharacter.dexterity + " "
-                return roll <= playerCharacter.intelligence
+                mainTextView.text = mainTextView.text.toString() + "\n\n Test zręczności! \n Rzuciłeś: " + roll.toString() + " vs twoja zręczność równa: " + playerCharacter.dexterity + " "
+                return roll <= playerCharacter.dexterity
             }
             3 -> {
                 mainTextView.text = mainTextView.text.toString() + "\n\n Test wiedzy! \n Rzuciłeś: " + roll.toString() + " vs twoja wiedza równa: " + playerCharacter.intelligence + " "
@@ -321,14 +327,29 @@ class main_game : AppCompatActivity() {
     }
 
     private val ButtonAnswerOneListener = View.OnClickListener {
+        if(itemOneToGive != "") {
+            addItemToInventory(itemOneToGive)
+            itemOneToGive = ""
+        }
+
         initializeParagraphAndAnswers(answerOneID)
     }
 
     private val ButtonAnswerTwoListener = View.OnClickListener {
+        if(itemTwoToGive != "") {
+            addItemToInventory(itemTwoToGive)
+            itemTwoToGive = ""
+        }
+
         initializeParagraphAndAnswers(answerTwoID)
     }
 
     private val ButtonAnswerThreeListener = View.OnClickListener {
+        if(itemThreeToGive != "") {
+            addItemToInventory(itemThreeToGive)
+            itemThreeToGive = ""
+        }
+
         initializeParagraphAndAnswers(answerThreeID)
     }
 
